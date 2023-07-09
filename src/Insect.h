@@ -17,7 +17,8 @@ private:
 
 	// physics
 	float radius;
-	sf::Vector2f speed;
+	float speed;
+	sf::Vector2f direction;
 	sf::Vector2f position;
 
 	// shape object
@@ -25,6 +26,7 @@ private:
 
 	//private functions
 	void initInsect(float x, float y);
+	void clipWalls();
 
 public:
 	// construct / destruct
@@ -33,8 +35,8 @@ public:
 	~Insect();
 
 	// update functions
-	void rotateSpeed(float angle);
-	void updateSpeed(sf::Vector2f speedDif);
+	void rotate(float angle);
+	void updateSpeed(float speedDif);
 	void update();
 
 	// render functions

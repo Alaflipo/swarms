@@ -78,10 +78,14 @@ void Game::pollEvents() {
 			case sf::Event::KeyPressed:
 				if (this->event.key.code == sf::Keyboard::Escape)
 					this->window->close();
+				if (this->event.key.code == sf::Keyboard::Left)
+					this->updateSwarmDirection(-5.0f);
+				if (this->event.key.code == sf::Keyboard::Right)
+					this->updateSwarmDirection(5.0f);
 				if (this->event.key.code == sf::Keyboard::Up)
-					this->updateSwarmSpeed(-5.0f);
+					this->updateSwarmSpeed(1.0f);
 				if (this->event.key.code == sf::Keyboard::Down)
-					this->updateSwarmSpeed(5.0f);
+					this->updateSwarmSpeed(-1.0f);
 				break;
 			default:
 				break;
@@ -105,10 +109,16 @@ void Game::updateMousePositions() {
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
 }
 
-// updates the speed of the swarm by changing the angle (in degree)
-void Game::updateSwarmSpeed(float angle) {
+// updates the direction of the swarm by changing the angle (in degree)
+void Game::updateSwarmDirection(float angle) {
 	for (auto& insect : this->swarm) {
-		insect.rotateSpeed(angle);
+		insect.rotate(angle);
+	}
+}
+
+void Game::updateSwarmSpeed(float speedDif) {
+	for (auto& insect : this->swarm) {
+		insect.updateSpeed(speedDif);
 	}
 }
 
