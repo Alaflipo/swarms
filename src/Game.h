@@ -48,6 +48,7 @@ public:
 	void pollEvents();
 	void updateMousePositions();
 
+	void updateSwarmSpeed(float angle);
 	void updateSwarm();
 	void update();
 

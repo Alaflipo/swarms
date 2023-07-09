@@ -22,7 +22,7 @@ void Game::initSwarm() {
 	for (int i { 0 }; i < this->swarmSize; i++) {
 		float randX { static_cast<float>(rand() % static_cast<int>(this->window->getSize().x)) };
 		float randY { static_cast<float>(rand() % static_cast<int>(this->window->getSize().y)) };
-		Insect insect { randX, randY };
+		Insect insect { this->window, randX, randY };
 		this->swarm.push_back(insect);
 	}
 }
@@ -31,7 +31,7 @@ void Game::initilizeVariables() {
 	this->window = nullptr;
 
 	// Game logic
-	this->swarmSize = 50;
+	this->swarmSize = 10;
 }
 
 void Game::initWindow() {
@@ -78,6 +78,10 @@ void Game::pollEvents() {
 			case sf::Event::KeyPressed:
 				if (this->event.key.code == sf::Keyboard::Escape)
 					this->window->close();
+				if (this->event.key.code == sf::Keyboard::Up)
+					this->updateSwarmSpeed(-5.0f);
+				if (this->event.key.code == sf::Keyboard::Down)
+					this->updateSwarmSpeed(5.0f);
 				break;
 			default:
 				break;
@@ -99,6 +103,13 @@ void Game::updateMousePositions() {
 
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
+}
+
+// updates the speed of the swarm by changing the angle (in degree)
+void Game::updateSwarmSpeed(float angle) {
+	for (auto& insect : this->swarm) {
+		insect.rotateSpeed(angle);
+	}
 }
 
 void Game::updateSwarm() {
@@ -124,7 +135,7 @@ void Game::update() {
 void Game::renderSwarm() {
 
 	for (auto& insect : this->swarm) {
-		insect.render(this->window);
+		insect.render();
 	}
 }
 
