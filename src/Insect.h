@@ -9,6 +9,7 @@
 
 #include "vectorMath.h"
 #include <iostream>
+#include <vector>
 
 class Insect {
 private:
@@ -17,12 +18,14 @@ private:
 
 	// physics
 	float radius;
+	float radiusCircle;
 	float speed;
 	sf::Vector2f direction;
 	sf::Vector2f position;
 
 	// shape object
 	sf::CircleShape shape;
+	sf::CircleShape visionCircle;
 
 	//private functions
 	void initInsect(float x, float y);
@@ -34,13 +37,20 @@ public:
 	Insect(sf::RenderWindow* window, float x, float y);
 	~Insect();
 
+	// getters
+	sf::Vector2f getPosition();
+	sf::Vector2f getDirection();
+
 	// update functions
 	void rotate(float angle);
 	void updateSpeed(float speedDif);
+	void seperation(std::vector<Insect>& others, float scalar);
+	void alignment(std::vector<Insect>& others, float scalar);
+	void cohesion(std::vector<Insect>& others, float scalar);
 	void update();
 
 	// render functions
-	void renderInsect();
+	void drawInsect();
 	void drawSpeedVector();
 	void render();
 };

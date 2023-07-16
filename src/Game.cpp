@@ -31,15 +31,15 @@ void Game::initilizeVariables() {
 	this->window = nullptr;
 
 	// Game logic
-	this->swarmSize = 10;
+	this->swarmSize = 50;
 }
 
 void Game::initWindow() {
-	this->videoMode.height = 600.0;
-	this->videoMode.width = 800.0;
+	this->videoMode.height = 800.0;
+	this->videoMode.width = 1000.0;
 	this->window = new sf::RenderWindow(this->videoMode, "Swarms");
 
-	this->window->setFramerateLimit(60);
+	this->window->setFramerateLimit(100);
 }
 
 // CONSTRUCT AND DESTRUCT FUNCTION
@@ -124,6 +124,9 @@ void Game::updateSwarmSpeed(float speedDif) {
 
 void Game::updateSwarm() {
 	for (auto& insect : this->swarm) {
+		insect.seperation(this->swarm, 0.1);
+		insect.alignment(this->swarm, 0.01);
+		insect.cohesion(this->swarm, 0.001);
 		insect.update();
 	}
 }
@@ -160,7 +163,7 @@ void Game::render() {
 	*/
 
 	// clear old frame
-	this->window->clear();
+	this->window->clear(sf::Color(42, 64, 82));
 
 	// draw everything to the window
 	this->renderSwarm();
